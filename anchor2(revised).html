@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Phrasal Verbs & Expressions Mastery (A2-B1)</title>
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --secondary: #06B6D4;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --success: #10B981;
+      --success-bg: #D1FAE5;
+      --success-border: #059669;
+      --error: #EF4444;
+      --error-bg: #FEE2E2;
+      --error-border: #DC2626;
+      --border: #E2E8F0;
+      --radius: 12px;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Navigation Tabs */
+    nav {
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 24px;
+      background: var(--card-bg);
+      padding: 6px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Main Container */
+    main {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .section {
+      display: none;
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Common Buttons */
+    .btn {
+      display: inline-block;
+      width: 100%;
+      padding: 12px 16px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s ease;
+      margin-top: 16px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: #94A3B8;
+    }
+    .btn-secondary:hover {
+      background-color: #64748B;
+    }
+
+    /* Flashcard Styles */
+    .flashcard-container {
+      perspective: 1000px;
+      height: 250px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .flashcard {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+    }
+
+    .flashcard.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      border-radius: var(--radius);
+      background-color: #FAFAFA;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+      background-color: #EEF2FF;
+    }
+
+    .word-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .word-meaning {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #1E1B4B;
+      margin-bottom: 12px;
+    }
+
+    .word-example {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    .word-example-ko {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .card-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-controls button {
+      width: 48%;
+      margin-top: 0;
+    }
+
+    /* Quiz Common Styles */
+    .quiz-progress {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-align: right;
+    }
+
+    .question-box {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-btn {
+      padding: 14px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background-color: #F4F3FF;
+    }
+
+    /* 두드러지는 정답 / 오답 스타일 */
+    .option-btn.correct {
+      background-color: var(--success-bg) !important;
+      border-color: var(--success-border) !important;
+      color: #065F46;
+      font-weight: 700;
+    }
+
+    .option-btn.incorrect {
+      background-color: var(--error-bg) !important;
+      border-color: var(--error-border) !important;
+      color: #991B1B;
+      text-decoration: line-through;
+    }
+
+    /* Fill-in / Short Answer Styles */
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
+    }
+
+    .feedback {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      display: none;
+      border-left: 5px solid transparent;
+    }
+
+    .feedback.correct {
+      display: block;
+      background-color: var(--success-bg);
+      color: #065F46;
+      border-left-color: var(--success-border);
+      font-weight: 700;
+    }
+
+    .feedback.retry {
+      display: block;
+      background-color: #FEF3C7;
+      color: #92400E;
+      border-left-color: #D97706;
+      font-weight: 600;
+    }
+
+    .feedback.incorrect {
+      display: block;
+      background-color: var(--error-bg);
+      color: #991B1B;
+      border-left-color: var(--error-border);
+      font-weight: 600;
+    }
+
+    /* Reading Passage Styles */
+    .passage-card {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px dashed var(--border);
+    }
+
+    .passage-card:last-child {
+      border-bottom: none;
+    }
+
+    .passage-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .passage-box {
+      background-color: #F1F5F9;
+      padding: 18px;
+      border-radius: 8px;
+      line-height: 1.8;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--primary);
+    }
+
+    .inline-input-wrapper {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
+
+    .inline-input {
+      padding: 4px 8px;
+      font-size: 0.95rem;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      background-color: white;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .correct-ans-label {
+      font-size: 0.75rem;
+      color: var(--error-border);
+      font-weight: 700;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 10px;
+      background: #F8FAFC;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+
+    .word-chip {
+      background: #E0E7FF;
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Score Modal / Result */
+    .result-card {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #EEF2FF;
+      color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0 auto 16px auto;
+      border: 4px solid var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>English Expressions Mastery</h1>
+    <p>핵심 관용구 6개 완전 정복 (A2-B1)</p>
+  </header>
+
+  <nav>
+    <button class="tab-btn active" onclick="switchTab('flashcards', event)">1. 플래시카드</button>
+    <button class="tab-btn" onclick="switchTab('mcq', event)">2. 객관식 퀴즈</button>
+    <button class="tab-btn" onclick="switchTab('short', event)">3. 주관식 쓰기</button>
+    <button class="tab-btn" onclick="switchTab('passage', event)">4. 지문 완성하기</button>
+  </nav>
+
+  <main>
+    <!-- 1. 플래시카드 섹션 -->
+    <section id="flashcards" class="section active">
+      <div class="quiz-progress" id="fc-progress">1 / 6</div>
+      <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+          <div class="card-face card-front">
+            <div class="word-title" id="fc-word">keep track of</div>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">(클릭하여 뜻과 예문 확인)</p>
+          </div>
+          <div class="card-face card-back">
+            <div class="word-meaning" id="fc-meaning">~을 파악하다 / 기록하다</div>
+            <div class="word-example" id="fc-example">"I use an app to keep track of my daily expenses."</div>
+            <div class="word-example-ko" id="fc-example-ko">(나는 매일의 지출을 기록하기 위해 앱을 사용한다.)</div>
+          </div>
+        </div>
+      </div>
+      <div class="card-controls">
+        <button class="btn btn-secondary" onclick="prevCard()">이전</button>
+        <button class="btn" onclick="nextCard()">다음</button>
+      </div>
+    </section>
+
+    <!-- 2. 객관식 퀴즈 섹션 -->
+    <section id="mcq" class="section">
+      <div id="mcq-game">
+        <div class="quiz-progress" id="mcq-progress">문제 1 / 6</div>
+        <div class="question-box" id="mcq-question">질문이 여기에 표시됩니다.</div>
+        <div class="options-grid" id="mcq-options"></div>
+        <div class="feedback" id="mcq-feedback"></div>
+        <button class="btn" id="mcq-next-btn" style="display: none;" onclick="nextMcq()">다음 문제</button>
+      </div>
+      <div id="mcq-result" class="result-card" style="display: none;">
+        <h2>퀴즈 완료!</h2>
+        <div class="score-circle" id="mcq-score">0/6</div>
+        <p id="mcq-result-msg">수고하셨습니다!</p>
+        <button class="btn" onclick="startMcq()">다시 풀기</button>
+      </div>
+    </section>
+
+    <!-- 3. 주관식 퀴즈 섹션 -->
+    <section id="short" class="section">
+      <div id="short-game">
+        <div class="quiz-progress" id="short-progress">문제 1 / 6</div>
+        <div class="question-box" id="short-question">질문이 여기에 표시됩니다.</div>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:10px;">* 아래 문장의 밑줄 부분에 들어갈 알맞은 표현을 입력하세요.</p>
+        <div class="input-group">
+          <input type="text" id="short-input" class="text-input" placeholder="영어 숙어를 입력하세요 (예: keep track of)" onkeyup="checkEnter(event)">
+        </div>
+        <button class="btn" id="short-submit-btn" onclick="submitShort()">정답 확인</button>
+        <div class="feedback" id="short-feedback"></div>
+        <button class="btn" id="short-next-btn" style="display: none;" onclick="nextShort()">다음 문제</button>
+      </div>
+      <div id="short-result" class="result-card" style="display: none;">
+        <h2>주관식 테스트 완료!</h2>
+        <div class="score-circle" id="short-score">0/6</div>
+        <p id="short-result-msg">잘 하셨습니다!</p>
+        <button class="btn" onclick="startShort()">다시 풀기</button>
+      </div>
+    </section>
+
+    <!-- 4. 지문 속 빈칸 채우기 섹션 -->
+    <section id="passage" class="section">
+      <h2>Reading Passages</h2>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">아래 단어 상자를 참고하여 각 지문의 빈칸에 알맞은 표현을 입력하세요.</p>
+      
+      <div class="word-bank">
+        <span class="word-chip">keep track of</span>
+        <span class="word-chip">take a break</span>
+        <span class="word-chip">stay away from</span>
+        <span class="word-chip">get enough sleep</span>
+        <span class="word-chip">deal with</span>
+        <span class="word-chip">stick to</span>
+      </div>
+
+      <!-- 지문 1 -->
+      <div class="passage-card">
+        <div class="passage-title">Passage 1. Healthy Daily Habits</div>
+        <div class="passage-box">
+          Living a healthy life is not always easy. Last year, I was very stressed and didn't know how to 
+          <strong>(1)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p1" style="width: 130px;">
+            <span class="correct-ans-label" id="p1-label"></span>
+          </span> my heavy workload. 
+          I used to work for hours without stopping, but now I make sure to 
+          <strong>(2)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p2" style="width: 130px;">
+            <span class="correct-ans-label" id="p2-label"></span>
+          </span> every hour to stretch. 
+          Also, I try to 
+          <strong>(3)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p3" style="width: 140px;">
+            <span class="correct-ans-label" id="p3-label"></span>
+          </span> sugary drinks and fast food. 
+          To manage my daily routine, I use a planner to 
+          <strong>(4)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p4" style="width: 130px;">
+            <span class="correct-ans-label" id="p4-label"></span>
+          </span> all my tasks and goals. 
+          Most importantly, I learned that I must 
+          <strong>(5)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p5" style="width: 150px;">
+            <span class="correct-ans-label" id="p5-label"></span>
+          </span> every night—at least 7 hours—to stay energized. 
+          It is hard, but I will 
+          <strong>(6)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p6" style="width: 110px;">
+            <span class="correct-ans-label" id="p6-label"></span>
+          </span> my new healthy schedule!
+        </div>
+      </div>
+
+      <!-- 지문 2 -->
+      <div class="passage-card">
+        <div class="passage-title">Passage 2. Exam Preparation Advice</div>
+        <div class="passage-box">
+          Preparing for final exams can be difficult. If you feel overwhelmed, remember to 
+          <strong>(1)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p2_1" style="width: 130px;">
+            <span class="correct-ans-label" id="p2_1-label"></span>
+          </span> regularly so your brain can rest. 
+          You should also 
+          <strong>(2)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p2_2" style="width: 140px;">
+            <span class="correct-ans-label" id="p2_2-label"></span>
+          </span> social media and smartphones while studying. 
+          Instead of studying all night, make sure to 
+          <strong>(3)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p2_3" style="width: 150px;">
+            <span class="correct-ans-label" id="p2_3-label"></span>
+          </span> to stay focused during the test.
+        </div>
+      </div>
+
+      <!-- 지문 3 -->
+      <div class="passage-card">
+        <div class="passage-title">Passage 3. Managing Work and Habits</div>
+        <div class="passage-box">
+          When you start a new job, learning to 
+          <strong>(1)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p3_1" style="width: 130px;">
+            <span class="correct-ans-label" id="p3_1-label"></span>
+          </span> your daily deadlines is essential. 
+          It is important to 
+          <strong>(2)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p3_2" style="width: 130px;">
+            <span class="correct-ans-label" id="p3_2-label"></span>
+          </span> unexpected problems calmly. 
+          Finally, if you set personal goals, try your best to 
+          <strong>(3)</strong> 
+          <span class="inline-input-wrapper">
+            <input type="text" class="inline-input" id="p3_3" style="width: 110px;">
+            <span class="correct-ans-label" id="p3_3-label"></span>
+          </span> them until the end.
+        </div>
+      </div>
+
+      <button class="btn" onclick="checkPassage()">모든 지문 채점하기</button>
+      <div class="feedback" id="passage-feedback"></div>
+    </section>
+  </main>
+
+  <script>
+    // 단어 데이터
+    const vocabulary = [
+      {
+        id: "keep_track_of",
+        word: "keep track of",
+        meaning: "~을 파악하다 / 기록하다",
+        explanation: "'keep track of'는 일이나 일정, 지출 등을 놓치지 않고 계속 기록하거나 파악하고 있을 때 사용하는 표현입니다.",
+        example: "I use an app to keep track of my spending.",
+        exampleKo: "나는 내 지출을 파악하기 위해 앱을 사용한다."
+      },
+      {
+        id: "take_a_break",
+        word: "take a break",
+        meaning: "휴식을 취하다",
+        explanation: "'take a break'는 일이나 공부 도중에 잠시 멈추고 쉬는 시간을 가질 때 쓰는 표현입니다.",
+        example: "You look tired. You should take a break.",
+        exampleKo: "너 피곤해 보여. 좀 쉬는 게 좋겠어."
+      },
+      {
+        id: "stay_away_from",
+        word: "stay away from",
+        meaning: "~을 멀리하다 / 피하다",
+        explanation: "'stay away from'은 해로운 것들이나 피해야 할 대상 가까이에 가지 않고 멀리 떨어져 있는 것을 뜻합니다.",
+        example: "Try to stay away from junk food if you want to be healthy.",
+        exampleKo: "건강해지고 싶다면 정크푸드를 멀리하도록 해라."
+      },
+      {
+        id: "get_enough_sleep",
+        word: "get enough sleep",
+        meaning: "충분한 수면을 취하다",
+        explanation: "'get enough sleep'은 피로 회복과 건강 유지를 위해 충분한 시간 동안 잠을 자는 것을 의미합니다.",
+        example: "It is important to get enough sleep before an exam.",
+        exampleKo: "시험 전에는 충분한 수면을 취하는 것이 중요하다."
+      },
+      {
+        id: "deal_with",
+        word: "deal with",
+        meaning: "~을 다루다 / 처리하다 / 대처하다",
+        explanation: "'deal with'는 문제, 상황, 또는 사람을 적절히 처리하거나 대처해 나갈 때 사용하는 표현입니다.",
+        example: "How do you deal with stress after a busy day?",
+        exampleKo: "바쁜 하루를 보낸 후 스트레스를 어떻게 해소(대처)하나요?"
+      },
+      {
+        id: "stick_to",
+        word: "stick to",
+        meaning: "~을 지키다 / 고수하다",
+        explanation: "'stick to'는 약속, 계획, 목표 등을 포기하지 않고 끝까지 지키거나 고수할 때 쓰입니다.",
+        example: "It's hard to stick to a strict diet.",
+        exampleKo: "엄격한 다이어트 계획을 지키는 것은 어렵다."
+      }
+    ];
+
+    // TAB SWITCHING
+    function switchTab(tabId, evt) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      
+      if (evt && evt.target) {
+        evt.target.classList.add('active');
+      }
+      document.getElementById(tabId).classList.add('active');
+
+      if(tabId === 'mcq') startMcq();
+      if(tabId === 'short') startShort();
+    }
+
+    // 1. FLASHCARDS
+    let currentFcIndex = 0;
+    function updateCard() {
+      const cardEl = document.getElementById('flashcard');
+      cardEl.classList.remove('flipped');
+      setTimeout(() => {
+        const item = vocabulary[currentFcIndex];
+        document.getElementById('fc-word').textContent = item.word;
+        document.getElementById('fc-meaning').textContent = item.meaning;
+        document.getElementById('fc-example').textContent = `"${item.example}"`;
+        document.getElementById('fc-example-ko').textContent = `(${item.exampleKo})`;
+        document.getElementById('fc-progress').textContent = `${currentFcIndex + 1} / ${vocabulary.length}`;
+      }, 200);
+    }
+
+    function flipCard() {
+      document.getElementById('flashcard').classList.toggle('flipped');
+    }
+
+    function nextCard() {
+      currentFcIndex = (currentFcIndex + 1) % vocabulary.length;
+      updateCard();
+    }
+
+    function prevCard() {
+      currentFcIndex = (currentFcIndex - 1 + vocabulary.length) % vocabulary.length;
+      updateCard();
+    }
+
+    // 2. MULTIPLE CHOICE QUIZ (MCQ)
+    const mcqQuestions = [
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '~을 파악하다 / 기록하다'",
+        options: ["keep track of", "stay away from", "deal with", "take a break"],
+        answer: 0,
+        vocabId: "keep_track_of"
+      },
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '휴식을 취하다'",
+        options: ["stick to", "take a break", "get enough sleep", "deal with"],
+        answer: 1,
+        vocabId: "take_a_break"
+      },
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '~을 멀리하다 / 피하다'",
+        options: ["keep track of", "deal with", "stay away from", "stick to"],
+        answer: 2,
+        vocabId: "stay_away_from"
+      },
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '충분한 수면을 취하다'",
+        options: ["get enough sleep", "take a break", "keep track of", "stay away from"],
+        answer: 0,
+        vocabId: "get_enough_sleep"
+      },
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '~을 다루다 / 처리하다 / 대처하다'",
+        options: ["stick to", "stay away from", "take a break", "deal with"],
+        answer: 3,
+        vocabId: "deal_with"
+      },
+      {
+        q: "다음 뜻에 해당하는 영어 표현을 고르세요: '~을 지키다 / 고수하다'",
+        options: ["keep track of", "stick to", "get enough sleep", "deal with"],
+        answer: 1,
+        vocabId: "stick_to"
+      }
+    ];
+
+    let currentMcqIdx = 0;
+    let mcqScore = 0;
+    let mcqAttempts = 0;
+
+    function startMcq() {
+      currentMcqIdx = 0;
+      mcqScore = 0;
+      document.getElementById('mcq-game').style.display = 'block';
+      document.getElementById('mcq-result').style.display = 'none';
+      showMcqQuestion();
+    }
+
+    function showMcqQuestion() {
+      mcqAttempts = 0;
+      const q = mcqQuestions[currentMcqIdx];
+      document.getElementById('mcq-progress').textContent = `문제 ${currentMcqIdx + 1} / ${mcqQuestions.length}`;
+      document.getElementById('mcq-question').textContent = q.q;
+      
+      const optionsContainer = document.getElementById('mcq-options');
+      optionsContainer.innerHTML = '';
+      
+      const feedback = document.getElementById('mcq-feedback');
+      feedback.style.display = 'none';
+      feedback.className = 'feedback';
+      
+      document.getElementById('mcq-next-btn').style.display = 'none';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = `${idx + 1}. ${opt}`;
+        btn.onclick = () => selectMcqOption(idx, btn);
+        optionsContainer.appendChild(btn);
+      });
+    }
+
+    function selectMcqOption(selectedIndex, btnEl) {
+      const q = mcqQuestions[currentMcqIdx];
+      const buttons = document.querySelectorAll('#mcq-options .option-btn');
+      const feedback = document.getElementById('mcq-feedback');
+      const vocabObj = vocabulary.find(v => v.id === q.vocabId);
+
+      if (selectedIndex === q.answer) {
+        btnEl.classList.add('correct');
+        buttons.forEach(b => b.disabled = true);
+        
+        if (mcqAttempts === 0) {
+          mcqScore++;
+          feedback.innerHTML = `<strong>Correct!</strong>`;
+        } else {
+          feedback.innerHTML = `<strong>Correct! (두 번째 시도 성공)</strong>`;
+        }
+        feedback.className = "feedback correct";
+        document.getElementById('mcq-next-btn').style.display = 'block';
+      } else {
+        if (mcqAttempts === 0) {
+          mcqAttempts = 1;
+          btnEl.classList.add('incorrect');
+          btnEl.disabled = true;
+          feedback.innerHTML = `<strong>Try again</strong><br>다른 선지를 다시 골라보세요.`;
+          feedback.className = "feedback retry";
+        } else {
+          buttons.forEach(b => {
+            b.disabled = true;
+            const textContent = b.textContent.replace(/^\d+\.\s*/, '');
+            if (textContent === q.options[q.answer]) {
+              b.classList.add('correct');
+            }
+          });
+          btnEl.classList.add('incorrect');
+
+          feedback.innerHTML = `<strong>Incorrect...</strong><br><br>정답: <strong>"${q.options[q.answer]}"</strong><br><br>💡 <em>해설:</em> ${vocabObj.explanation}`;
+          feedback.className = "feedback incorrect";
+          document.getElementById('mcq-next-btn').style.display = 'block';
+        }
+      }
+    }
+
+    function nextMcq() {
+      currentMcqIdx++;
+      if (currentMcqIdx < mcqQuestions.length) {
+        showMcqQuestion();
+      } else {
+        document.getElementById('mcq-game').style.display = 'none';
+        document.getElementById('mcq-result').style.display = 'block';
+        document.getElementById('mcq-score').textContent = `${mcqScore}/${mcqQuestions.length}`;
+      }
+    }
+
+    // 3. SHORT ANSWER QUIZ (1차 틀림: Try again + 정답 안내 / 2차 틀림: Incorrect... + 정답 및 해설)
+    const shortQuestions = [
+      {
+        q: "I need to __________________ my daily schedule so I don't waste time. (나의 일정을 파악/기록해야 한다)",
+        ans: "keep track of",
+        vocabId: "keep_track_of"
+      },
+      {
+        q: "If you feel tired, you should __________________ for 10 minutes. (10분 동안 휴식을 취해야 한다)",
+        ans: "take a break",
+        vocabId: "take_a_break"
+      },
+      {
+        q: "The doctor advised him to __________________ fast food. (패스트푸드를 멀리하라고 조언했다)",
+        ans: "stay away from",
+        vocabId: "stay_away_from"
+      },
+      {
+        q: "To perform well tomorrow, you must __________________. (충분한 수면을 취해야 한다)",
+        ans: "get enough sleep",
+        vocabId: "get_enough_sleep"
+      },
+      {
+        q: "She knows how to __________________ difficult customers at work. (까다로운 손님들을 대처하다/다루다)",
+        ans: "deal with",
+        vocabId: "deal_with"
+      },
+      {
+        q: "It takes strong willpower to __________________ your goals. (목표를 끝까지 고수하다/지키다)",
+        ans: "stick to",
+        vocabId: "stick_to"
+      }
+    ];
+
+    let currentShortIdx = 0;
+    let shortScore = 0;
+    let shortAttempts = 0;
+
+    function startShort() {
+      currentShortIdx = 0;
+      shortScore = 0;
+      document.getElementById('short-game').style.display = 'block';
+      document.getElementById('short-result').style.display = 'none';
+      showShortQuestion();
+    }
+
+    function showShortQuestion() {
+      shortAttempts = 0;
+      const q = shortQuestions[currentShortIdx];
+      document.getElementById('short-progress').textContent = `문제 ${currentShortIdx + 1} / ${shortQuestions.length}`;
+      document.getElementById('short-question').textContent = q.q;
+      
+      const input = document.getElementById('short-input');
+      input.value = '';
+      input.disabled = false;
+      input.style.borderColor = "var(--border)";
+      input.style.backgroundColor = "white";
+      
+      const feedback = document.getElementById('short-feedback');
+      feedback.style.display = 'none';
+      feedback.className = 'feedback';
+      
+      document.getElementById('short-submit-btn').style.display = 'block';
+      document.getElementById('short-next-btn').style.display = 'none';
+    }
+
+    function checkEnter(e) {
+      if (e.key === 'Enter') {
+        const submitBtn = document.getElementById('short-submit-btn');
+        if (submitBtn.style.display !== 'none') {
+          submitShort();
+        } else {
+          nextShort();
+        }
+      }
+    }
+
+    function submitShort() {
+      const inputEl = document.getElementById('short-input');
+      const userAns = inputEl.value.trim().toLowerCase().replace(/\s+/g, ' ');
+      const q = shortQuestions[currentShortIdx];
+      const correctAns = q.ans.toLowerCase().replace(/\s+/g, ' ');
+      const feedback = document.getElementById('short-feedback');
+      const vocabObj = vocabulary.find(v => v.id === q.vocabId);
+
+      if (userAns === correctAns) {
+        inputEl.disabled = true;
+        inputEl.style.borderColor = "var(--success-border)";
+        inputEl.style.backgroundColor = "var(--success-bg)";
+        document.getElementById('short-submit-btn').style.display = 'none';
+
+        if (shortAttempts === 0) {
+          shortScore++;
+          feedback.innerHTML = `<strong>Correct!</strong>`;
+        } else {
+          feedback.innerHTML = `<strong>Correct! (두 번째 시도 성공)</strong>`;
+        }
+        feedback.className = "feedback correct";
+        document.getElementById('short-next-btn').style.display = 'block';
+      } else {
+        if (shortAttempts === 0) {
+          shortAttempts = 1;
+          inputEl.style.borderColor = "#D97706";
+          inputEl.style.backgroundColor = "#FEF3C7";
+          feedback.innerHTML = `<strong>Try again (${inputEl.value})</strong><br>정답: <strong>"${q.ans}"</strong><br>다시 한 번 올바르게 입력해 보세요!`;
+          feedback.className = "feedback retry";
+          inputEl.focus();
+        } else {
+          inputEl.disabled = true;
+          inputEl.style.borderColor = "var(--error-border)";
+          inputEl.style.backgroundColor = "var(--error-bg)";
+          document.getElementById('short-submit-btn').style.display = 'none';
+
+          feedback.innerHTML = `<strong>Incorrect...</strong><br><br>입력하신 값: <span style="text-decoration: line-through;">${inputEl.value}</span><br>정답: <strong>"${q.ans}"</strong><br><br>💡 <em>해설:</em> ${vocabObj.explanation}`;
+          feedback.className = "feedback incorrect";
+          document.getElementById('short-next-btn').style.display = 'block';
+        }
+      }
+    }
+
+    function nextShort() {
+      currentShortIdx++;
+      if (currentShortIdx < shortQuestions.length) {
+        showShortQuestion();
+      } else {
+        document.getElementById('short-game').style.display = 'none';
+        document.getElementById('short-result').style.display = 'block';
+        document.getElementById('short-score').textContent = `${shortScore}/${shortQuestions.length}`;
+      }
+    }
+
+    // 4. PASSAGE COMPLETION
+    function checkPassage() {
+      const answers = {
+        // Passage 1
+        p1: "deal with",
+        p2: "take a break",
+        p3: "stay away from",
+        p4: "keep track of",
+        p5: "get enough sleep",
+        p6: "stick to",
+        // Passage 2
+        p2_1: "take a break",
+        p2_2: "stay away from",
+        p2_3: "get enough sleep",
+        // Passage 3
+        p3_1: "keep track of",
+        p3_2: "deal with",
+        p3_3: "stick to"
+      };
+
+      let correctCount = 0;
+      let total = Object.keys(answers).length;
+
+      for (let key in answers) {
+        const input = document.getElementById(key);
+        const label = document.getElementById(`${key}-label`);
+
+        if (input) {
+          const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+          if (val === answers[key]) {
+            input.style.borderColor = "var(--success-border)";
+            input.style.backgroundColor = "var(--success-bg)";
+            if (label) {
+              label.style.display = "none";
+            }
+            correctCount++;
+          } else {
+            input.style.borderColor = "var(--error-border)";
+            input.style.backgroundColor = "var(--error-bg)";
+            if (label) {
+              label.textContent = `정답: ${answers[key]}`;
+              label.style.display = "block";
+            }
+          }
+        }
+      }
+
+      const feedback = document.getElementById('passage-feedback');
+      if (correctCount === total) {
+        feedback.innerHTML = `<strong>Correct! 모든 빈칸을 맞추셨습니다! (${correctCount}/${total})</strong>`;
+        feedback.className = "feedback correct";
+      } else {
+        feedback.innerHTML = `<strong>Incorrect... (총 ${total}개 빈칸 중 ${correctCount}개 맞춤)</strong><br>오답으로 표시된 빈칸 아래에 정답이 빨간색 글씨로 안내됩니다.`;
+        feedback.className = "feedback incorrect";
+      }
+    }
+
+    // Initialize
+    updateCard();
+  </script>
+</body>
+</html>
